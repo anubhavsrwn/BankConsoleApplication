@@ -11,7 +11,7 @@ namespace BankConsoleApplication
         public string Currency { get; set; }
         public BankStaff Bankstaff;
         public List<Account> Accounts;
-
+        public List<Transaction> Transactions;
         public Bank()
         {
             Console.WriteLine("Enter Bank Name");
@@ -19,6 +19,7 @@ namespace BankConsoleApplication
             GenerateBankId();
             Currency = "INR";
             Bankstaff = new BankStaff(BankName);
+
         }
 
 
@@ -37,6 +38,8 @@ namespace BankConsoleApplication
         {
             Accounts.Add(new Account());
         }
+
+
 
 
     }
