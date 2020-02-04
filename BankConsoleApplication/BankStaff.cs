@@ -21,11 +21,11 @@ namespace BankConsoleApplication
         }
 
         
-        /*
-        public ModifyAccount();
-        public ShowTransaction();
-        public RevertTransaction(); 
-        */
+        
+        ////public ModifyAccount();
+        ////public ShowTransaction();
+        ////public RevertTransaction(); 
+        
 
 
     }

@@ -7,13 +7,16 @@ namespace BankConsoleApplication
     class Customer
     {
         public string CustomerName;
-        public string CustomerMobile;
+        public string CustomerId;
+        public string CustomerPassword;
 
-        public Customer(string customerName)
+        public Customer(string customerName, string customerId)
         {
             this.CustomerName = customerName;
-            Console.WriteLine("Enter Customer Contact number : ");
-            CustomerMobile = Console.ReadLine();
+            this.CustomerId = customerId;
+            Console.WriteLine("Customer Id is : "+ CustomerId);
+            Console.WriteLine("Create a Password");
+            CustomerPassword = Console.ReadLine();
         }
     }
 }
