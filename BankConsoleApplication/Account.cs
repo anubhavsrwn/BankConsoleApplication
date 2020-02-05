@@ -6,7 +6,7 @@ namespace BankConsoleApplication
 {
     class Account
     {
-
+        public static int AccountCount = 0;
         public string AccountId { get; set; }
         public string AccountHolderName { get; set; }
         public decimal AccountBalance { get; set; }
@@ -24,6 +24,7 @@ namespace BankConsoleApplication
             Console.WriteLine("Enter the amount of Initial Deposit : ");
             AccountBalance += Convert.ToDecimal(Console.ReadLine());
             AccountTransactions.Add(new Transaction("Account Created", AccountId, AccountBalance, AccountBalance));
+            AccountCount++;
         }
 
         public void GenerateAccountId(string BankName)
@@ -40,12 +41,11 @@ namespace BankConsoleApplication
             AccountTransactions.Add(new Transaction("Deposit", AccountId, depositAmount, AccountBalance));
         }
 
-        public void Deposit(decimal depositAmount)
+        public void Deposit(decimal depositAmount, string sendersAccountId)
         {
             
             AccountBalance += depositAmount;
-            Console.WriteLine("Updated balance : " + AccountBalance);
-            AccountTransactions.Add(new Transaction("Deposit", AccountId, depositAmount, AccountBalance));
+            AccountTransactions.Add(new Transaction("Received From", AccountId, sendersAccountId, depositAmount, AccountBalance));
         }
 
         public void Withdrawal()
@@ -59,13 +59,12 @@ namespace BankConsoleApplication
         }
 
 
-        public void Withdrawal(decimal withdrawalAmount)
+        public void Withdrawal(decimal withdrawalAmount, string receiversAccountId)
         {
             
             AccountBalance -= withdrawalAmount;
             Console.WriteLine("Updated balance : " + AccountBalance);
-            AccountTransactions.Add(new Transaction("Withdrawal", AccountId, withdrawalAmount, AccountBalance));
-
+            AccountTransactions.Add(new Transaction("Sent To", AccountId, receiversAccountId, withdrawalAmount, AccountBalance));
         }
 
 

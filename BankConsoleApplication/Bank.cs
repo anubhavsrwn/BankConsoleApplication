@@ -6,6 +6,7 @@ namespace BankConsoleApplication
 {
     class Bank
     {
+        public static int BankCount = 0;
         public string BankName { get; set; }
         public string BankId { get; set; }
         public decimal SIMPS = 0.05m;
@@ -15,16 +16,16 @@ namespace BankConsoleApplication
         public string Currency { get; set; }
         public BankStaff Bankstaff { get; set; }
         public List<Account> Accounts = new List<Account>();
-        public List<Transaction> BankTransactions = new List<Transaction>();
 
         public Bank()
         {
             Console.WriteLine("Enter Bank Name");
             BankName = Console.ReadLine();
             GenerateBankId();
+            Console.WriteLine("Bank ID : " + BankId);
             Currency = "INR";
             Bankstaff = new BankStaff(BankName);
-
+            BankCount++;
         }
 
         public void GenerateBankId()
@@ -66,18 +67,16 @@ namespace BankConsoleApplication
             string receiversAccountId = rAccountId.AccountId;
             decimal amount;
             decimal ServiceCharge;
-            Console.WriteLine("Enter Receiver's AccountId : ");
-            receiversAccountId = Console.ReadLine();
             Console.WriteLine("Enter Amount : ");
             amount = Convert.ToDecimal(Console.ReadLine());
-            if(sendersAccountId.Substring(4,7)==receiversAccountId.Substring(4,7))
+            if(sendersAccountId.Substring(4,3)== receiversAccountId.Substring(4,3))
             {
 
                 Console.WriteLine("Select One :");
                 Console.WriteLine("1. IMPS (5%)");
                 Console.WriteLine("2. RTGS (0%)");
                 Console.WriteLine("RTGS will be default.");
-                int choice = Convert.ToInt32(Console.ReadKey());
+                int choice = Convert.ToInt32(Console.ReadLine());
                 switch(choice)
                 {
                     case 1:
@@ -99,7 +98,7 @@ namespace BankConsoleApplication
                 Console.WriteLine("1. IMPS (6%)");
                 Console.WriteLine("2. RTGS (2%)");
                 Console.WriteLine("RTGS will be default.");
-                int choice = Convert.ToInt32(Console.ReadKey());
+                int choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
                     case 1:
@@ -114,9 +113,50 @@ namespace BankConsoleApplication
                         ServiceCharge = ORTGS;
                         break;
                 }
-                sAccountId.Withdrawal(amount);
-                rAccountId.Deposit(amount - ServiceCharge * amount);
+                
             }
+            sAccountId.Withdrawal(amount, rAccountId.AccountId);
+            rAccountId.Deposit(amount - ServiceCharge * amount, sAccountId.AccountId);
+            
+        }
+
+        public void RevertTransaction()
+        {
+            Console.WriteLine("Enter Transaction ID : ");
+            string txnId = Console.ReadLine();
+            int flag = 0;
+            foreach (var Account in Accounts)
+            {
+                for (int i = 0; i < Account.AccountTransactions.Count; i++)
+                {
+                    Transaction Transaction = Account.AccountTransactions[i];
+                    if (Transaction.TransactionId == txnId)
+                    {
+                        flag = 1;
+                        if (Transaction.TransactionType == "Sent To")
+                        {
+                            Account.AccountBalance += Transaction.Amount;
+                            Account.AccountTransactions.Remove(Account.AccountTransactions[i]);
+                            
+                        }
+
+                        else if (Transaction.TransactionType == "Received From")
+                        {
+                            Account.AccountBalance -= Transaction.Amount;
+                            Account.AccountTransactions.Remove(Account.AccountTransactions[i]);
+                        }
+                    }
+
+                }
+            }
+            
+            if (flag == 0)
+                Console.WriteLine("Transaction not Found!");
+        }
+
+        public void UpdateServiceCharges()
+        {
+
         }
     }
 }

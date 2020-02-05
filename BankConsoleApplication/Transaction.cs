@@ -6,6 +6,7 @@ namespace BankConsoleApplication
 {
     class Transaction
     {
+        public static int TransactionCount = 0;
         public string TransactionType { get; set; } //Deposit, Withdrawal or Fund Transfer
         public string TransactionId { get; set; }
         public string AccountId { get; set; }
@@ -17,6 +18,7 @@ namespace BankConsoleApplication
         public void GenerateTransactionId()
         {
             TransactionId = "TXN"+ DateTime.Now.ToString("yyMMddHHmmss");
+            TransactionCount++;
         }
 
 
@@ -39,9 +41,26 @@ namespace BankConsoleApplication
             GenerateTransactionId();
         }
 
+        public Transaction(string transactionType, string accountId, string accountId2, decimal amount, decimal updatedBalance)
+        {
+            this.TransactionType = transactionType;
+            AccountId = accountId;
+            if (transactionType == "Sent to")
+            {
+                this.ReceiversAccountId = accountId2;
+            }
+            else
+            { 
+            this.SendersAccountId = accountId2;
+            }
+            this.Amount = amount;
+            this.UpdatedBalance = updatedBalance;
+            GenerateTransactionId();
+        }
+
         public void Display()
         {
-            Console.WriteLine(AccountId + " | " + TransactionId +" | "+ TransactionType + " | " + Amount + " | BAL : " + UpdatedBalance);
+            Console.WriteLine(AccountId + " | " + TransactionId +" | "+ TransactionType + " | "+SendersAccountId + ReceiversAccountId +" | " + Amount + " | BAL : " + UpdatedBalance);
         }
     }
 }
