@@ -6,7 +6,6 @@ namespace BankConsoleApplication
 {
     class Transaction
     {
-        public static int TransactionCount = 0;
         public string TransactionType { get; set; } //Deposit, Withdrawal or Fund Transfer
         public string TransactionId { get; set; }
         public string AccountId { get; set; }
@@ -18,7 +17,6 @@ namespace BankConsoleApplication
         public void GenerateTransactionId()
         {
             TransactionId = "TXN"+ DateTime.Now.ToString("yyMMddHHmmss");
-            TransactionCount++;
         }
 
 

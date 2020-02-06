@@ -6,7 +6,6 @@ namespace BankConsoleApplication
 {
     class Account
     {
-        public static int AccountCount = 0;
         public string AccountId { get; set; }
         public string AccountHolderName { get; set; }
         public decimal AccountBalance { get; set; }
@@ -24,7 +23,6 @@ namespace BankConsoleApplication
             Console.WriteLine("Enter the amount of Initial Deposit : ");
             AccountBalance += Convert.ToDecimal(Console.ReadLine());
             AccountTransactions.Add(new Transaction("Account Created", AccountId, AccountBalance, AccountBalance));
-            AccountCount++;
         }
 
         public void GenerateAccountId(string BankName)

@@ -5,8 +5,7 @@ using System.Text;
 namespace BankConsoleApplication
 {
     class Bank
-    {
-        public static int BankCount = 0;
+    { 
         public string BankName { get; set; }
         public string BankId { get; set; }
         public decimal SIMPS = 0.05m;
@@ -25,7 +24,7 @@ namespace BankConsoleApplication
             Console.WriteLine("Bank ID : " + BankId);
             Currency = "INR";
             Bankstaff = new BankStaff(BankName);
-            BankCount++;
+            
         }
 
         public void GenerateBankId()
@@ -154,9 +153,6 @@ namespace BankConsoleApplication
                 Console.WriteLine("Transaction not Found!");
         }
 
-        public void UpdateServiceCharges()
-        {
 
-        }
     }
 }
